@@ -29,8 +29,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          command:
-            - local-path-provisioner
+          args:
             - --debug
             - start
             - --config
