@@ -294,7 +294,7 @@ func (p *LocalPathProvisioner) Provision(opts pvController.ProvisionOptions) (*v
 		return nil, err
 	}
 
-	fs := pvc.PersistentVolumeMode
+	fs := pvc.Spec.PersistentVolumeMode
 
 	var pvs v1.PersistentVolumeSource
 	if val, ok := opts.PVC.GetAnnotations()["volumeType"]; ok && strings.ToLower(val) == "local" {
