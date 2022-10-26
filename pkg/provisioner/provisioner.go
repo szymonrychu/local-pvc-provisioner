@@ -294,8 +294,6 @@ func (p *LocalPathProvisioner) Provision(opts pvController.ProvisionOptions) (*v
 		return nil, err
 	}
 
-	fs := pvc.Spec.PersistentVolumeMode
-
 	var pvs v1.PersistentVolumeSource
 	if val, ok := opts.PVC.GetAnnotations()["volumeType"]; ok && strings.ToLower(val) == "local" {
 		pvs = v1.PersistentVolumeSource{
@@ -348,7 +346,7 @@ func (p *LocalPathProvisioner) Provision(opts pvController.ProvisionOptions) (*v
 		Spec: v1.PersistentVolumeSpec{
 			PersistentVolumeReclaimPolicy: *opts.StorageClass.ReclaimPolicy,
 			AccessModes:                   pvc.Spec.AccessModes,
-			VolumeMode:                    &fs,
+			VolumeMode:                    pvc.Spec.VolumeMode,
 			Capacity: v1.ResourceList{
 				v1.ResourceName(v1.ResourceStorage): pvc.Spec.Resources.Requests[v1.ResourceName(v1.ResourceStorage)],
 			},
